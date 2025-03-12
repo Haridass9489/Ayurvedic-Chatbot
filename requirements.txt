@@ -3,6 +3,7 @@ langchain
 flask
 pypdf
 python-dotenv
+ctransformers
 pinecone[grpc]
 langchain-pinecone
 langchain_community
