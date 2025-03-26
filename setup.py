@@ -4,7 +4,7 @@ setup(
     name = 'Generative AI Project',
     version= '0.0.0',
     author= 'Bappy Ahmed',
-    author_email= 'entbappy73@gmail.com',
+    author_email= 'hdhms5572@gmail.com',
     packages= find_packages(),
     install_requires = []
 
