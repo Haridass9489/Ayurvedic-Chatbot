@@ -26,7 +26,7 @@
 									<span class="online_icon"></span>
 								</div>
 								<div class="user_info">
-									<span>Medical Chatbot</span>
+									<span>Siddha Medical Chatbot</span>
 									<p>Ask me anything!</p>
 								</div>
 							</div>
@@ -49,32 +49,50 @@
 		</div>
 		
 		<script>
-			$(document).ready(function() {
-				$("#messageArea").on("submit", function(event) {
-					const date = new Date();
-					const hour = date.getHours();
-					const minute = date.getMinutes();
-					const str_time = hour+":"+minute;
-					var rawText = $("#text").val();
-
-					var userHtml = '<div class="d-flex justify-content-end mb-4"><div class="msg_cotainer_send">' + rawText + '<span class="msg_time_send">'+ str_time + '</span></div><div class="img_cont_msg"><img src="https://i.ibb.co/d5b84Xw/Untitled-design.png" class="rounded-circle user_img_msg"></div></div>';
-					
-					$("#text").val("");
-					$("#messageFormeight").append(userHtml);
-
-					$.ajax({
-						data: {
-							msg: rawText,	
-						},
-						type: "POST",
-						url: "/get",
-					}).done(function(data) {
-						var botHtml = '<div class="d-flex justify-content-start mb-4"><div class="img_cont_msg"><img src="https://cdn-icons-png.flaticon.com/512/387/387569.png" class="rounded-circle user_img_msg"></div><div class="msg_cotainer">' + data + '<span class="msg_time">' + str_time + '</span></div></div>';
-						$("#messageFormeight").append($.parseHTML(botHtml));
-					});
-					event.preventDefault();
-				});
+			document.addEventListener("DOMContentLoaded", function() {
+			document.getElementById("messageArea").addEventListener("submit", function(event) {
+				event.preventDefault();
+				
+				const date = new Date();
+				const hour = date.getHours();
+				const minute = date.getMinutes();
+				const str_time = hour + ":" + minute;
+				
+				const rawText = document.getElementById("text").value;
+				
+				const userHtml = `
+					<div class="d-flex justify-content-end mb-4">
+						<div class="msg_cotainer_send">
+							${rawText}
+							<span class="msg_time_send">${str_time}</span>
+						</div>
+						<div class="img_cont_msg">
+							<img src="https://i.ibb.co/d5b84Xw/Untitled-design.png" class="rounded-circle user_img_msg">
+						</div>
+					</div>`;
+				
+				document.getElementById("text").value = "";
+				document.getElementById("messageFormeight").insertAdjacentHTML("beforeend", userHtml);
+				
+				fetch("/get?msg=" + encodeURIComponent(rawText))
+					.then(response => response.text())
+					.then(data => {
+						console.log(data);
+						const botHtml = `
+							<div class="d-flex justify-content-start mb-4">
+								<div class="img_cont_msg">
+									<img src="https://cdn-icons-png.flaticon.com/512/387/387569.png" class="rounded-circle user_img_msg">
+								</div>
+								<div class="msg_cotainer">
+									${data}
+									<span class="msg_time">${str_time}</span>
+								</div>
+							</div>`;
+						document.getElementById("messageFormeight").insertAdjacentHTML("beforeend", botHtml);
+					})
+					.catch(error => console.error("Error:", error));
 			});
+		});
 		</script>
         
     </body>
