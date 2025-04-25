@@ -1,3 +1,6 @@
+
+
+
 # Ayurvedic-Chatbot
 git clone <repository-url>
 cd <repository-folder>
@@ -12,3 +15,5 @@ source medibot_env/bin/activate
 
 # Install All Requirements
 pip install -r requirements.txt
+
+# should download lamma from hugging face - link : 
